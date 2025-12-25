@@ -1,27 +1,28 @@
 const text = document.getElementById("text");
 const playBtn = document.getElementById("play");
 const downloadBtn = document.getElementById("download");
+const themeBtn = document.getElementById("theme");
 const canvas = document.getElementById("waveform");
 const ctx = canvas.getContext("2d");
 
-/* 🌍 Language Auto-Detect */
+/* Language auto-detection */
 function detectLanguage(txt) {
   if (/[\u0900-\u097F]/.test(txt)) return "hi"; // Hindi
   if (/[\u0600-\u06FF]/.test(txt)) return "ar"; // Arabic
   return "en";
 }
 
-/* 🔊 Waveform */
+/* Waveform animation */
 function drawWave() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#ff7a7a";
-  for (let i=0;i<30;i++){
-    const h = Math.random()*canvas.height;
-    ctx.fillRect(i*12, canvas.height-h, 8, h);
+  for (let i = 0; i < 30; i++) {
+    const h = Math.random() * canvas.height;
+    ctx.fillRect(i * 12, canvas.height - h, 8, h);
   }
 }
 
-/* ▶ Browser Speech */
+/* Play browser speech with waveform */
 playBtn.onclick = () => {
   const utter = new SpeechSynthesisUtterance(text.value);
   utter.lang = detectLanguage(text.value);
@@ -31,15 +32,22 @@ playBtn.onclick = () => {
   utter.onend = () => clearInterval(interval);
 };
 
-/* 💾 REAL MP3 DOWNLOAD */
+/* Download real MP3 using backend */
 downloadBtn.onclick = async () => {
   const lang = detectLanguage(text.value);
-  const res = await fetch("http://localhost:5000/tts", {
+  const res = await fetch("https://YOUR_BACKEND_URL/tts", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text: text.value, lang })
   });
-
   const data = await res.json();
-  window.open(data.url);
+  window.open(data.url); // Opens MP3 in new tab for download
+};
+
+/* Dark/Light Mode toggle */
+themeBtn.onclick = () => {
+  document.body.classList.toggle("light");
+  themeBtn.textContent = document.body.classList.contains("light")
+    ? "🌞 Light Mode"
+    : "🌙 Dark Mode";
 };
