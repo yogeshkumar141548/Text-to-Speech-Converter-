@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Poppins, sans-serif;
 }
 
 .container {
@@ -9,15 +9,16 @@ body {
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg,#161578,#b81055);
+  padding: 1rem;
 }
 
 .app {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   padding: 1.5rem;
   background: rgba(255,255,255,0.15);
   color: #fff;
-  border-radius: 15px;
+  border-radius: 16px;
   text-align: center;
 }
 
@@ -27,6 +28,7 @@ textarea {
   padding: 10px;
   border-radius: 10px;
   border: none;
+  margin-top: 1rem;
 }
 
 canvas {
@@ -34,6 +36,7 @@ canvas {
   height: 80px;
   margin-top: 10px;
   background: #000;
+  border-radius: 8px;
 }
 
 .buttons {
@@ -48,9 +51,25 @@ button {
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  background: linear-gradient(90deg,#F4244C,#F57D4E);
+  color: #fff;
 }
 
 footer {
   margin-top: 10px;
   font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+/* Dark/Light toggle */
+body.light {
+  background: #f4f4f4;
+}
+body.light .app {
+  background: #fff;
+  color: #000;
+}
+body.light textarea {
+  background: #f1f1f1;
+  color: #000;
 }
