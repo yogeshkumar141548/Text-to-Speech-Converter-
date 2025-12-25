@@ -5,6 +5,10 @@ const themeBtn = document.getElementById("theme");
 const canvas = document.getElementById("waveform");
 const ctx = canvas.getContext("2d");
 
+/* Canvas size */
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
 /* Language auto-detection */
 function detectLanguage(txt) {
   if (/[\u0900-\u097F]/.test(txt)) return "hi"; // Hindi
@@ -16,14 +20,22 @@ function detectLanguage(txt) {
 function drawWave() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#ff7a7a";
+
   for (let i = 0; i < 30; i++) {
-    const h = Math.random() * canvas.height;
-    ctx.fillRect(i * 12, canvas.height - h, 8, h);
+    const height = Math.random() * canvas.height;
+    ctx.fillRect(i * 12, canvas.height - height, 8, height);
   }
 }
 
-/* Play browser speech with waveform */
+/* Play Text to Speech */
 playBtn.onclick = () => {
+  if (!text.value.trim()) {
+    alert("Please enter text first!");
+    return;
+  }
+
+  speechSynthesis.cancel(); // stop previous speech
+
   const utter = new SpeechSynthesisUtterance(text.value);
   utter.lang = detectLanguage(text.value);
   speechSynthesis.speak(utter);
@@ -32,23 +44,23 @@ playBtn.onclick = () => {
   utter.onend = () => clearInterval(interval);
 };
 
-// Download real MP3 using backend
+/* Download MP3 (Backend required) */
 downloadBtn.onclick = async () => {
+  if (!text.value.trim()) {
+    alert("Please enter text first!");
+    return;
+  }
+
   const lang = detectLanguage(text.value);
-  const res = await fetch("https://text-to-speech-converter-s8lc.onrender.com/tts", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: text.value, lang })
-  });
-  const data = await res.json();
-  window.open(data.url); // Opens MP3 in new tab for download
-};
 
+  try {
+    const res = await fetch(
+      "https://text-to-speech-converter-s8lc.onrender.com/tts",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text.value, lang })
+      }
+    );
 
-/* Dark/Light Mode toggle */
-themeBtn.onclick = () => {
-  document.body.classList.toggle("light");
-  themeBtn.textContent = document.body.classList.contains("light")
-    ? "🌞 Light Mode"
-    : "🌙 Dark Mode";
-};
+   
