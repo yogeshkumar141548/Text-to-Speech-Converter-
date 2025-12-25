@@ -32,10 +32,10 @@ playBtn.onclick = () => {
   utter.onend = () => clearInterval(interval);
 };
 
-/* Download real MP3 using backend */
+// Download real MP3 using backend
 downloadBtn.onclick = async () => {
   const lang = detectLanguage(text.value);
-  const res = await fetch("https://YOUR_BACKEND_URL/tts", {
+  const res = await fetch("https://text-to-speech-converter-s8lc.onrender.com/tts", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text: text.value, lang })
@@ -43,6 +43,7 @@ downloadBtn.onclick = async () => {
   const data = await res.json();
   window.open(data.url); // Opens MP3 in new tab for download
 };
+
 
 /* Dark/Light Mode toggle */
 themeBtn.onclick = () => {
