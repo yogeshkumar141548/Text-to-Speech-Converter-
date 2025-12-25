@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 body {
   margin: 0;
   font-family: Poppins, sans-serif;
 }
 
+/* Main container */
 .container {
   min-height: 100vh;
   display: flex;
@@ -12,6 +15,7 @@ body {
   padding: 1rem;
 }
 
+/* App card */
 .app {
   width: 100%;
   max-width: 420px;
@@ -20,8 +24,10 @@ body {
   color: #fff;
   border-radius: 16px;
   text-align: center;
+  backdrop-filter: blur(10px);
 }
 
+/* Textarea */
 textarea {
   width: 100%;
   height: 120px;
@@ -29,8 +35,11 @@ textarea {
   border-radius: 10px;
   border: none;
   margin-top: 1rem;
+  resize: none;
+  font-size: 0.9rem;
 }
 
+/* Waveform */
 canvas {
   width: 100%;
   height: 80px;
@@ -39,6 +48,7 @@ canvas {
   border-radius: 8px;
 }
 
+/* Buttons */
 .buttons {
   display: flex;
   gap: 10px;
@@ -53,23 +63,41 @@ button {
   cursor: pointer;
   background: linear-gradient(90deg,#F4244C,#F57D4E);
   color: #fff;
+  font-weight: 500;
+  transition: 0.3s;
 }
 
+button:hover {
+  transform: scale(1.03);
+  opacity: 0.95;
+}
+
+/* Footer */
 footer {
   margin-top: 10px;
   font-size: 0.7rem;
   opacity: 0.8;
 }
 
-/* Dark/Light toggle */
+/* 🌞 Light Mode */
 body.light {
   background: #f4f4f4;
 }
+
+body.light .container {
+  background: linear-gradient(135deg,#e3e3e3,#ffffff);
+}
+
 body.light .app {
   background: #fff;
   color: #000;
 }
+
 body.light textarea {
   background: #f1f1f1;
   color: #000;
+}
+
+body.light canvas {
+  background: #eaeaea;
 }
